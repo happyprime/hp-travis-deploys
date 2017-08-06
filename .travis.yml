@@ -1,0 +1,3 @@
+before_install:
+- openssl aes-256-cbc -K $encrypted_b8150c751d3e_key -iv $encrypted_b8150c751d3e_iv
+  -in hp_deploy_rsa.enc -out hp_deploy_rsa -d
