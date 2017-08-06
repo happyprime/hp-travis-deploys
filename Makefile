@@ -1,2 +1,3 @@
 build:
-	# This is an empty build.
+	rm -rf build
+	cp src build
