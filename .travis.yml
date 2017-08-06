@@ -1,3 +1,6 @@
+sudo: false
+language: php
+
 addons:
   ssh_known_hosts: 23.239.25.212
 
