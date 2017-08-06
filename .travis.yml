@@ -20,6 +20,8 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/$HP_BUILD_DIR deploy@23.239.25.212:/home/deploy/$TRAVIS_REPO_SLUG-$TRAVIS_BRANCH
+  script:
+    - ssh deploy@23.239.25.212 'mkdir -p /home/deploy/$TRAVIS_REPO_SLUG-$TRAVIS_BRANCH'
+    - rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/$HP_BUILD_DIR deploy@23.239.25.212:/home/deploy/$TRAVIS_REPO_SLUG-$TRAVIS_BRANCH
   on:
     all_branches: true
