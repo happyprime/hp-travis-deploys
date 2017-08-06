@@ -1,3 +1,3 @@
 build:
 	rm -rf build
-	cp src build
+	cp -r src build
