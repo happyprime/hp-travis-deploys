@@ -1,6 +1,9 @@
 sudo: false
 language: php
 
+env:
+  - HP_KEY_FILE="hp_deploy_rsa"
+
 addons:
   ssh_known_hosts: 23.239.25.212
 
@@ -8,10 +11,10 @@ script: make build
 
 before_deploy:
   - openssl aes-256-cbc -K $encrypted_b8150c751d3e_key -iv $encrypted_b8150c751d3e_iv
-    -in hp_deploy_rsa.enc -out /tmp/hp_deploy_rsa -d
+    -in $HP_KEY_FILE.enc -out /tmp/$HP_KEY_FILE -d
   - eval "$(ssh-agent -s)"
-  - chmod 600 /tmp/hp_deploy_rsa
-  - ssh-add /tmp/hp_deploy_rsa
+  - chmod 600 /tmp/$HP_KEY_FILE
+  - ssh-add /tmp/$HP_KEY_FILE
 
 deploy:
   provider: script
