@@ -2,8 +2,9 @@ sudo: false
 language: php
 
 env:
-  - HP_KEY_FILE="hp_deploy_rsa"
-  - HP_BUILD_DIR="build"
+  global:
+    - HP_KEY_FILE="hp_deploy_rsa"
+    - HP_BUILD_DIR="build"
 
 addons:
   ssh_known_hosts: 23.239.25.212
