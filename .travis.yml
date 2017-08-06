@@ -1,0 +1,27 @@
+sudo: false
+language: php
+
+env:
+  global:
+    - HP_KEY_FILE="hp_deploy_rsa"
+    - HP_BUILD_DIR="build"
+
+addons:
+  ssh_known_hosts: 23.239.25.212
+
+script: make build
+
+before_deploy:
+  - openssl aes-256-cbc -K $encrypted_b8150c751d3e_key -iv $encrypted_b8150c751d3e_iv
+    -in $HP_KEY_FILE.enc -out /tmp/$HP_KEY_FILE -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 /tmp/$HP_KEY_FILE
+  - ssh-add /tmp/$HP_KEY_FILE
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script:
+    - rsync -r --delete-after --quiet --rsync-path="mkdir -p /home/deploy/$TRAVIS_REPO_SLUG-$TRAVIS_BRANCH && rsync" $TRAVIS_BUILD_DIR/$HP_BUILD_DIR deploy@23.239.25.212:/home/deploy/$TRAVIS_REPO_SLUG-$TRAVIS_BRANCH
+  on:
+    all_branches: true
