@@ -17,3 +17,5 @@ deploy:
   provider: script
   skip_cleanup: true
   script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/src deploy@23.239.25.212:/home/deploy/$TRAVIS_BRANCH-files
+  on:
+    all_branches: true
